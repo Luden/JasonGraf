@@ -23,7 +23,7 @@ namespace JasonGraf
 
         private void ImportUss()
         {
-            var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Editor/Cheats/JasonGraf/JasonGrafEditor.uss");
+            var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Editor/JasonGraf/JasonGrafEditor.uss");
             styleSheets.Add(styleSheet);
         }
     }

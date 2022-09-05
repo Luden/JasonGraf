@@ -27,13 +27,13 @@ namespace JasonGraf
 
         private void ImportUxml()
         {
-            var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Editor/Cheats/JasonGraf/JasonGrafEditor.uxml");
+            var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Editor/JasonGraf/JasonGrafEditor.uxml");
             visualTree.CloneTree(rootVisualElement);
         }
 
         private void ImportUss()
         {
-            var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Editor/Cheats/JasonGraf/JasonGrafEditor.uss");
+            var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/Editor/JasonGraf/JasonGrafEditor.uss");
             rootVisualElement.styleSheets.Add(styleSheet);
         }
     }
