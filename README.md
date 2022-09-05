@@ -1,2 +1,2 @@
 # JasonGraf
-Edit any json file in Unity in convenient graph representation
+Edit any JSON file in Unity in convenient graph representation
