@@ -1,0 +1,46 @@
+{
+  "node_1": {
+    "int": 1,
+    "float": 2.3,
+    "bool": true,
+    "string": "test_string",
+    "sub_node": {
+      "string_2": "test_2",
+      "bool_2": false
+    },
+    "int_list": [
+      1,
+      2,
+      3
+    ],
+    "float_list": [
+      1.2,
+      2.3,
+      3.4
+    ],
+    "string_list": [
+      "foo",
+      "bar",
+      "baz"
+    ],
+    "node_list": [
+      {
+        "string_3": "test_3"
+      },
+      {
+        "bool_3": true
+      }
+    ]
+  },
+  "node_2": {
+    "int": 2,
+    "bool": false,
+    "string": "test_string_2",
+  },
+  "node_3": {
+    "int": 3,
+    "float": 3.14,
+    "bool": true,
+    "string": "test_string_3",    
+  }
+}

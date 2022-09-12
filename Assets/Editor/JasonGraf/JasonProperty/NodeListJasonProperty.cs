@@ -15,7 +15,7 @@ namespace JasonGraf.JasonProperty
             foreach (var objNode in nodeList)
             {
                 var node = objNode as IDictionary<string, object>;
-                var jasonNode = JasonNodeFactory.Create(node);
+                var jasonNode = JasonNodeFactory.Create(Name, node);
                 Value.Add(jasonNode);
             }
         }

@@ -10,7 +10,7 @@ namespace JasonGraf.JasonProperty
         public override void Parse()
         {
             var node = ParentNode[Name] as IDictionary<string, object>;
-            Value = JasonNodeFactory.Create(node);
+            Value = JasonNodeFactory.Create(Name, node);
         }
 
         public override void Commit()

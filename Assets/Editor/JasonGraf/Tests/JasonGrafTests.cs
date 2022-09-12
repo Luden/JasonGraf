@@ -55,7 +55,7 @@ namespace JasonGraf.Tests
         public void ParseAndSerializeTest()
         {
           var json = JsonFacade.StringToJson(_testStr);
-          var node = JasonNodeFactory.Create(json);
+          var node = JasonNodeFactory.Create("", json);
           var newJson = node.Serialize();
           var text = JsonFacade.JsonToString(json);
           var newText = JsonFacade.JsonToString(newJson);

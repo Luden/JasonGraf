@@ -2,7 +2,11 @@
     <Style src="JasonGrafEditor.uss" />
     <JasonGraf.SplitView fixed-pane-initial-dimension="200">
         <ui:VisualElement name="left-panel">
-            <JasonGraf.JasonInspectorView />
+            <JasonGraf.JasonInspectorView>
+                <ui:Button text="Load from..." display-tooltip-when-elided="true" name="load-button" />
+                <ui:Button text="Save" display-tooltip-when-elided="true" name="save-button" />
+                <ui:Button text="Save as..." display-tooltip-when-elided="true" name="save-as-button" />
+            </JasonGraf.JasonInspectorView>
         </ui:VisualElement>
         <ui:VisualElement name="right-panel">
             <JasonGraf.JasonGrafView focusable="true" style="flex-grow: 1;" />

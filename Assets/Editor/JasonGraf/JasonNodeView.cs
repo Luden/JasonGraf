@@ -4,10 +4,12 @@ namespace JasonGraf
 {
     public class JasonNodeView : Node
     {
+        public JasonNode Node;
 
         public JasonNodeView(JasonNode node)
         {
-            this.title = node.Id;
+            Node = node;
+            title = node.Id;
         }
     }
 }
