@@ -6,7 +6,11 @@
     "string": "test_string",
     "sub_node": {
       "string_2": "test_2",
-      "bool_2": false
+      "bool_2": false,
+      "_pos": [
+        0,
+        0
+      ]
     },
     "int_list": [
       1,
@@ -25,22 +29,42 @@
     ],
     "node_list": [
       {
-        "string_3": "test_3"
+        "string_3": "test_3",
+        "_pos": [
+          0,
+          0
+        ]
       },
       {
-        "bool_3": true
+        "bool_3": true,
+        "_pos": [
+          0,
+          0
+        ]
       }
+    ],
+    "_pos": [
+      0,
+      0
     ]
   },
   "node_2": {
     "int": 2,
     "bool": false,
     "string": "test_string_2",
+    "_pos": [
+      361,
+      267
+    ]
   },
   "node_3": {
     "int": 3,
     "float": 3.14,
     "bool": true,
-    "string": "test_string_3",    
+    "string": "test_string_3",
+    "_pos": [
+      364,
+      -131
+    ]
   }
 }
