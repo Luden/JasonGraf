@@ -6,7 +6,7 @@ namespace JasonGraf.JasonProperty
     public class NodeListJasonProperty : BaseJasonProperty
     {
         public override JasonPropertyType Type => JasonPropertyType.NodeList;
-        public List<JasonNode> Value;
+        public List<JasonNode> Value = new List<JasonNode>();
 
         public override void Parse()
         {
@@ -22,9 +22,14 @@ namespace JasonGraf.JasonProperty
 
         public override void Commit()
         {
-            ParentNode[Name] = Value
-                .Select(x => x.Serialize())
-                .ToList();
+            if (Value.Count > 0)
+            {
+                ParentNode[Name] = Value
+                    .Select(x => x.Serialize())
+                    .ToList();
+            }
+            else
+                ParentNode.Remove(Name);
         }
     }
 }

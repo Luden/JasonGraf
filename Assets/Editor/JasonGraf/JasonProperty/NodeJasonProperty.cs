@@ -15,7 +15,10 @@ namespace JasonGraf.JasonProperty
 
         public override void Commit()
         {
-            ParentNode[Name] = Value.Serialize();
+            if (Value != null)
+                ParentNode[Name] = Value.Serialize();
+            else
+                ParentNode.Remove(Name);
         }
     }
 }

@@ -21,7 +21,8 @@ namespace JasonGraf
 
         public void AddNode(JasonNode node)
         {
-            Nodes.Add(node);
+            if (!Nodes.Contains(node))
+                Nodes.Add(node);
         }
 
         public void RemoveNode(JasonNode node)

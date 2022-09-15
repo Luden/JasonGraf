@@ -74,7 +74,26 @@ namespace JasonGraf
                 foreach (var graphElement in graphviewchange.elementsToRemove)
                 {
                     if (graphElement is JasonNodeView jasonNodeView)
+                    {
                         _document.RemoveNode(jasonNodeView.Node);
+                    }
+                    if (graphElement is Edge edge)
+                    {
+                        var parentNode = (JasonNodeView)edge.output.node;
+                        var childNode = (JasonNodeView)edge.input.node;
+                        parentNode.DetachNode(edge.output, childNode);
+                        _document.AddNode(childNode.Node);
+                    }
+                }
+            }
+            if (graphviewchange.edgesToCreate != null)
+            {
+                foreach (var edge in graphviewchange.edgesToCreate)
+                {
+                    var parentNode = (JasonNodeView)edge.output.node;
+                    var childNode = (JasonNodeView)edge.input.node;
+                    parentNode.AttachNode(edge.output, childNode);
+                    _document.RemoveNode(childNode.Node);
                 }
             }
             return graphviewchange;
@@ -84,6 +103,11 @@ namespace JasonGraf
         {
             base.BuildContextualMenu(evt);
             evt.menu.AppendAction("Add node", x => AddNode());
+        }
+
+        public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
+        {
+            return ports.ToList().Where(p => p.direction != startPort.direction && p.node != startPort.node).ToList();
         }
 
         public void AddNode()
@@ -98,12 +122,20 @@ namespace JasonGraf
             styleSheets.Add(styleSheet);
         }
 
-        private void CreateNodeView(JasonNode node)
+        public JasonNodeView CreateNodeView(JasonNode node)
         {
-            var nodeView = new JasonNodeView(node);
+            var nodeView = new JasonNodeView(this, node);
             AddElement(nodeView);
+            return nodeView;
         }
 
-
+        public Edge CreateEdge(Port output, Port input)
+        {
+            var edge = new Edge();
+            edge.input = input;
+            edge.output = output;
+            AddElement(edge);
+            return edge;
+        }
     }
 }
