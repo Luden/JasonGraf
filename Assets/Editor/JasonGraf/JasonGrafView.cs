@@ -73,16 +73,13 @@ namespace JasonGraf
             {
                 foreach (var graphElement in graphviewchange.elementsToRemove)
                 {
-                    if (graphElement is JasonNodeView jasonNodeView)
+                    if (graphElement is Node node)
                     {
-                        _document.RemoveNode(jasonNodeView.Node);
+                        RemoveGraphNode(node);
                     }
                     if (graphElement is Edge edge)
                     {
-                        var parentNode = (JasonNodeView)edge.output.node;
-                        var childNode = (JasonNodeView)edge.input.node;
-                        parentNode.DetachNode(edge.output, childNode);
-                        _document.AddNode(childNode.Node);
+                        RemoveGraphEdge(edge);
                     }
                 }
             }
@@ -114,6 +111,30 @@ namespace JasonGraf
         {
             var jasonNode = _document.AddNode();
             CreateNodeView(jasonNode);
+        }
+
+        private void RemoveGraphNode(Node node)
+        {
+            if (node is JasonNodeView jasonNodeView)
+                _document.RemoveNode(jasonNodeView.Node);
+            foreach (var graphEdge in graphElements.ToList().OfType<Edge>())
+            {
+                var shouldAlsoRemove = graphEdge.output.node == node || graphEdge.input.node == node;
+                if (shouldAlsoRemove)
+                    RemoveGraphEdge(graphEdge);
+            }
+            RemoveElement(node);
+        }
+
+        private void RemoveGraphEdge(Edge edge)
+        {
+            var parentNode = edge.output.node as JasonNodeView;
+            var childNode = edge.input.node as JasonNodeView;
+            if (parentNode != null)
+                parentNode.DetachNode(edge.output, childNode);
+            if (childNode != null)
+                _document.AddNode(childNode.Node);
+            RemoveElement(edge);
         }
 
         private void ImportUss()
