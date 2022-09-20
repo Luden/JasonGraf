@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using JasonGraf.JasonProperty;
 using JasonGraf.JasonPropertyViews;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace JasonGraf
 {
@@ -10,13 +11,17 @@ namespace JasonGraf
     {
         public readonly JasonNode Node;
         public readonly Port Input;
-        public readonly List<BaseJasonPropertyView> Views = new List<BaseJasonPropertyView>();
 
+        private readonly List<BaseJasonPropertyView> _views = new List<BaseJasonPropertyView>();
         private readonly JasonNodePorts _ports;
+        private readonly JasonGrafView _graph;
 
         public JasonNodeView(JasonGrafView graph, JasonNode node)
         {
+            _graph = graph;
             Node = node;
+            Node.PropertyRemoved += OnPropertyRemoved;
+            Node.PropertyAdded += OnPropertyAdded;
             title = Node.Id;
 
             style.left = Node.Position.x;
@@ -27,7 +32,8 @@ namespace JasonGraf
             Input.portName = "";
             inputContainer.Add(Input);
 
-            CreatePropertyViews(graph);
+            foreach (var property in Node.Properties)
+                AddPropertyView(property);
         }
 
         public override void SetPosition(Rect newPos)
@@ -51,15 +57,33 @@ namespace JasonGraf
                 owner.DetachNode(node);
         }
 
-        private void CreatePropertyViews(JasonGrafView graph)
+        private void RemovePropertyView(BaseJasonProperty property)
         {
-            foreach (var property in Node.Properties.Values)
-            {
-                var view = JasonPropertyViewFactory.Create(property);
-                view.CreateChildNodes(graph, _ports);
-                extensionContainer.Add(view);
-                Views.Add(view);
-            }
+            var view = _views.FirstOrDefault(x => x.Property == property);
+            if (view == null)
+                return;
+            view.RemovePorts(_ports);
+            _views.Remove(view);
+            extensionContainer.Remove(view);
+        }
+
+        private void AddPropertyView(BaseJasonProperty property)
+        {
+            var view = JasonPropertyViewFactory.Create(property, Node);
+            view.CreatePorts(_ports);
+            view.CreateChildNodes(_graph);
+            extensionContainer.Add(view);
+            _views.Add(view);
+        }
+
+        private void OnPropertyRemoved(BaseJasonProperty property)
+        {
+            RemovePropertyView(property);
+        }
+
+        private void OnPropertyAdded(BaseJasonProperty property)
+        {
+            AddPropertyView(property);
         }
     }
 }

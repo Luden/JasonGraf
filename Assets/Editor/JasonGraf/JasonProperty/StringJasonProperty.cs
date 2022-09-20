@@ -7,14 +7,14 @@ namespace JasonGraf.JasonProperty
         public override JasonPropertyType Type => JasonPropertyType.String;
         public string Value;
 
-        public override void Parse()
+        public override void Parse(object value)
         {
-            Value = Convert.ToString(ParentNode[Name]);
+            Value = Convert.ToString(value);
         }
 
-        public override void Commit()
+        public override object Serialize()
         {
-            ParentNode[Name] = Value;
+            return Value;
         }
     }
 }

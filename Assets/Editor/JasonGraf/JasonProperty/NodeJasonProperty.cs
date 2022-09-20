@@ -7,18 +7,15 @@ namespace JasonGraf.JasonProperty
         public override JasonPropertyType Type => JasonPropertyType.Node;
         public JasonNode Value;
 
-        public override void Parse()
+        public override void Parse(object value)
         {
-            var node = ParentNode[Name] as IDictionary<string, object>;
+            var node = value as IDictionary<string, object>;
             Value = JasonNodeFactory.Create(Name, node);
         }
 
-        public override void Commit()
+        public override object Serialize()
         {
-            if (Value != null)
-                ParentNode[Name] = Value.Serialize();
-            else
-                ParentNode.Remove(Name);
+            return Value.Serialize();
         }
     }
 }

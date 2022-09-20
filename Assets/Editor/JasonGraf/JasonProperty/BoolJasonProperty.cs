@@ -7,14 +7,14 @@ namespace JasonGraf.JasonProperty
         public override JasonPropertyType Type => JasonPropertyType.Bool;
         public bool Value;
 
-        public override void Parse()
+        public override void Parse(object value)
         {
-            Value = Convert.ToBoolean(ParentNode[Name]);
+            Value = Convert.ToBoolean(value);
         }
 
-        public override void Commit()
+        public override object Serialize()
         {
-            ParentNode[Name] = Value;
+            return Value;
         }
     }
 }

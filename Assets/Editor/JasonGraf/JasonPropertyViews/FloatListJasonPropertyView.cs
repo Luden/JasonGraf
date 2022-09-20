@@ -6,8 +6,8 @@ namespace JasonGraf.JasonPropertyViews
     {
         public new FloatListJasonProperty Property;
 
-        public FloatListJasonPropertyView(FloatListJasonProperty property)
-            : base(property)
+        public FloatListJasonPropertyView(FloatListJasonProperty property, JasonNode jasonNode)
+            : base(property, jasonNode)
         {
             Property = property;
         }

@@ -29,7 +29,7 @@ namespace JasonGraf
             textField.RegisterValueChangedCallback(evt => propertyView.Property.Name = evt.newValue);
             //generatedPort.contentContainer.Add(new Label("  "));
             generatedPort.contentContainer.Add(textField);
-            var deleteButton = new Button(() => RemovePort(generatedPort))
+            var deleteButton = new Button(() => _nodeView.Node.RemoveProperty(propertyView.Property))
             {
                 text = "X"
             };
@@ -48,11 +48,13 @@ namespace JasonGraf
             return owner;
         }
 
-        private void RemovePort(Port port)
+        public void RemovePort(Port port)
         {
             _nodeView.outputContainer.Remove(port);
             _nodeView.RefreshPorts();
             _nodeView.RefreshExpandedState();
+            _portOwners.TryGetValue(port, out var owner);
+            _nodeView.Node.Properties.Remove(owner.Property);
             _portOwners.Remove(port);
         }
     }

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace JasonGraf.JasonProperty
+﻿namespace JasonGraf.JasonProperty
 {
     public abstract class BaseJasonProperty
     {
@@ -8,17 +6,8 @@ namespace JasonGraf.JasonProperty
 
         public string Name;
 
-        protected IDictionary<string, object> ParentNode;
+        public abstract void Parse(object value);
 
-        public void Parse(IDictionary<string, object> parentNode, string name)
-        {
-            Name = name;
-            ParentNode = parentNode;
-            Parse();
-        }
-
-        public abstract void Parse();
-
-        public abstract void Commit();
+        public abstract object Serialize();
     }
 }

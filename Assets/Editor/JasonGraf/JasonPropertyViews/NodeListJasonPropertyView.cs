@@ -9,15 +9,24 @@ namespace JasonGraf.JasonPropertyViews
         public new NodeListJasonProperty Property;
         public Port Port;
 
-        public NodeListJasonPropertyView(NodeListJasonProperty property)
-            : base(property)
+        public NodeListJasonPropertyView(NodeListJasonProperty property, JasonNode jasonNode)
+            : base(property, jasonNode)
         {
             Property = property;
         }
 
-        public override void CreateChildNodes(JasonGrafView graph, JasonNodePorts ports)
+        public override void CreatePorts(JasonNodePorts ports)
         {
             Port = ports.AddPort(this, true);
+        }
+
+        public override void RemovePorts(JasonNodePorts ports)
+        {
+            ports.RemovePort(Port);
+        }
+
+        public override void CreateChildNodes(JasonGrafView graph)
+        {
             foreach (var node in Property.Value)
             {
                 var nodeView = graph.CreateNodeView(node);

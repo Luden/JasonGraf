@@ -8,21 +8,19 @@ namespace JasonGraf.JasonProperty
         public override JasonPropertyType Type => JasonPropertyType.StringList;
         public List<string> Value;
 
-        public override void Parse()
+        public override void Parse(object value)
         {
             Value = new List<string>();
-            if (ParentNode.TryGetValue(Name, out var value))
+            var valueList = (List<object>)value;
+            foreach (var e in valueList)
             {
-                foreach (var e in (List<object>)value)
-                {
-                    Value.Add(Convert.ToString(e));
-                }
+                Value.Add(Convert.ToString(e));
             }
         }
 
-        public override void Commit()
+        public override object Serialize()
         {
-            ParentNode[Name] = Value;
+            return Value;
         }
     }
 }

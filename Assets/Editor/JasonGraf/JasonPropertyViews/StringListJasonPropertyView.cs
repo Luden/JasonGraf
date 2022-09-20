@@ -6,8 +6,8 @@ namespace JasonGraf.JasonPropertyViews
     {
         public new StringListJasonProperty Property;
 
-        public StringListJasonPropertyView(StringListJasonProperty property)
-            : base(property)
+        public StringListJasonPropertyView(StringListJasonProperty property, JasonNode jasonNode)
+            : base(property, jasonNode)
         {
             Property = property;
         }

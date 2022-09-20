@@ -10,7 +10,8 @@ namespace JasonGraf.JasonProperty
         {
             var objectValue = parent[name];
             var jasonProperty = Create(objectValue);
-            jasonProperty.Parse(parent, name);
+            jasonProperty.Name = name;
+            jasonProperty.Parse(parent[name]);
             return jasonProperty;
         }
 
@@ -31,6 +32,7 @@ namespace JasonGraf.JasonProperty
                 if (anyValue is double) return new FloatListJasonProperty();
                 if (anyValue is string) return new StringListJasonProperty();
                 if (anyValue is IDictionary<string, object>) return new NodeListJasonProperty();
+                if (anyValue == null) return new NodeListJasonProperty();
                 throw new ApplicationException();
             }
             if (value is IDictionary<string, object>) return new NodeJasonProperty();

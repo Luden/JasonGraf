@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using JasonGraf.JasonProperty;
 using UnityEngine;
 
@@ -6,52 +8,60 @@ namespace JasonGraf
 {
     public abstract class JasonNode
     {
+        public event Action<BaseJasonProperty> PropertyRemoved;
+        public event Action<BaseJasonProperty> PropertyAdded;
+
         public string Id;
         public string Type;
         public string MetaType;
         public Vector2 Position;
-        public IDictionary<string, object> Data;
-        public IDictionary<string, BaseJasonProperty> Properties = new Dictionary<string, BaseJasonProperty>();
+        public List<BaseJasonProperty> Properties = new List<BaseJasonProperty>();
 
         public void Parse(IDictionary<string, object> data)
         {
-            Data = data;
-            Parse();
-        }
-
-        public virtual void Parse()
-        {
             Properties.Clear();
-            foreach (var pair in Data)
+            foreach (var pair in data)
             {
-                var property = JasonPropertyFactory.Create(Data, pair.Key);
-                Properties[pair.Key] = property;
+                var property = JasonPropertyFactory.Create(data, pair.Key);
+                Properties.Add(property);
             }
             LoadPosition();
         }
 
         public IDictionary<string, object> Serialize()
         {
+            var result = new Dictionary<string, object>();
             foreach (var property in Properties)
-            {
-                property.Value.Commit();
-            }
-            CommitPosition();
-            return Data;
+                result[property.Name] = property.Serialize();
+            CommitPosition(result);
+            return result;
+        }
+
+        public void AddProperty(BaseJasonProperty property)
+        {
+            Properties.Add(property);
+            PropertyAdded?.Invoke(property);
+        }
+
+        public void RemoveProperty(BaseJasonProperty property)
+        {
+            Properties.Remove(property);
+            PropertyRemoved?.Invoke(property);
         }
 
         private void LoadPosition()
         {
-            if (Properties.TryGetValue("_pos", out var posProp) && posProp is FloatListJasonProperty floatProp)
+            var posProperty = Properties.FirstOrDefault(x => x.Name == "_pos") as FloatListJasonProperty;
+            if (posProperty != null)
             {
-                Properties.Remove("_pos");
-                Position = new Vector2(floatProp.Value[0], floatProp.Value[1]);
+                Properties.Remove(posProperty);
+                Position = new Vector2(posProperty.Value[0], posProperty.Value[1]);
             }
         }
 
-        private void CommitPosition()
+        private void CommitPosition(IDictionary<string, object> data)
         {
-            Data["_pos"] = new int[] { (int)Position.x, (int)Position.y };
+            data["_pos"] = new int[] { (int)Position.x, (int)Position.y };
         }
     }
 }

@@ -8,10 +8,10 @@ namespace JasonGraf.JasonProperty
         public override JasonPropertyType Type => JasonPropertyType.NodeList;
         public List<JasonNode> Value = new List<JasonNode>();
 
-        public override void Parse()
+        public override void Parse(object value)
         {
             Value = new List<JasonNode>();
-            var nodeList = (List<object>)ParentNode[Name];
+            var nodeList = (List<object>)value;
             foreach (var objNode in nodeList)
             {
                 var node = objNode as IDictionary<string, object>;
@@ -20,16 +20,11 @@ namespace JasonGraf.JasonProperty
             }
         }
 
-        public override void Commit()
+        public override object Serialize()
         {
-            if (Value.Count > 0)
-            {
-                ParentNode[Name] = Value
-                    .Select(x => x.Serialize())
-                    .ToList();
-            }
-            else
-                ParentNode.Remove(Name);
+            return Value
+                .Select(x => x.Serialize())
+                .ToList();
         }
     }
 }

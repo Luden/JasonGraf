@@ -7,14 +7,14 @@ namespace JasonGraf.JasonProperty
         public override JasonPropertyType Type => JasonPropertyType.Float;
         public float Value;
 
-        public override void Parse()
+        public override void Parse(object value)
         {
-            Value = Convert.ToSingle(ParentNode[Name]);
+            Value = Convert.ToSingle(value);
         }
 
-        public override void Commit()
+        public override object Serialize()
         {
-            ParentNode[Name] = Value;
+            return Value;
         }
     }
 }
