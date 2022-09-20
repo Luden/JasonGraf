@@ -62,6 +62,7 @@ namespace JasonGraf
             var view = _views.FirstOrDefault(x => x.Property == property);
             if (view == null)
                 return;
+            view.ReleaseChildNodes(_graph);
             view.RemovePorts(_ports);
             _views.Remove(view);
             extensionContainer.Remove(view);

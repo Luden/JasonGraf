@@ -34,6 +34,11 @@ namespace JasonGraf.JasonPropertyViews
             }
         }
 
+        public override void ReleaseChildNodes(JasonGrafView graph)
+        {
+            graph.DeleteElements(Port.connections);
+        }
+
         public override void AttachNode(JasonNodeView node)
         {
             Property.Value.Add(node.Node);

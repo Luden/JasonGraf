@@ -17,6 +17,7 @@ namespace JasonGraf.JasonPropertyViews
         public virtual void CreatePorts(JasonNodePorts ports) { }
         public virtual void RemovePorts(JasonNodePorts ports) { }
         public virtual void CreateChildNodes(JasonGrafView graph) { }
+        public virtual void ReleaseChildNodes(JasonGrafView graph) { }
         public virtual void AttachNode(JasonNodeView node) { }
         public virtual void DetachNode(JasonNodeView node) { }
 
