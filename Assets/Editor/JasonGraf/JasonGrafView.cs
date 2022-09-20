@@ -51,7 +51,7 @@ namespace JasonGraf
         private string SerializeGraphElementsImpl(IEnumerable<GraphElement> elements)
         {
             var document = new JasonGrafDocument();
-            foreach (var nodeView in elements.Cast<JasonNodeView>()) // todo: take only roots
+            foreach (var nodeView in elements.OfType<JasonNodeView>()) // todo: take only roots
                 document.AddNode(nodeView.Node);
             var data = document.Serialize();
             return JsonFacade.JsonToString(data);
