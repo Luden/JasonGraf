@@ -18,23 +18,23 @@ namespace JasonGraf
         public Port AddPort(BaseJasonPropertyView propertyView, bool isMulti)
         {
             var generatedPort = _nodeView.InstantiatePort(Orientation.Horizontal, Direction.Output, isMulti ? Port.Capacity.Multi : Port.Capacity.Single, typeof(bool));
-            var portLabel = generatedPort.contentContainer.Q<Label>("type");
-            generatedPort.contentContainer.Remove(portLabel);
+            // var portLabel = generatedPort.contentContainer.Q<Label>("type");
+            // generatedPort.contentContainer.Remove(portLabel);
 
             var textField = new TextField()
             {
                 name = string.Empty,
                 value = propertyView.Property.Name
             };
-            textField.RegisterValueChangedCallback(evt => generatedPort.portName = evt.newValue);
-            generatedPort.contentContainer.Add(new Label("  "));
+            textField.RegisterValueChangedCallback(evt => propertyView.Property.Name = evt.newValue);
+            //generatedPort.contentContainer.Add(new Label("  "));
             generatedPort.contentContainer.Add(textField);
             var deleteButton = new Button(() => RemovePort(generatedPort))
             {
                 text = "X"
             };
             generatedPort.contentContainer.Add(deleteButton);
-            generatedPort.portName = propertyView.Property.Name;
+            generatedPort.portName = "";
             _nodeView.outputContainer.Add(generatedPort);
             _nodeView.RefreshPorts();
             _nodeView.RefreshExpandedState();
