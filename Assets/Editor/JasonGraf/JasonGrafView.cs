@@ -152,9 +152,7 @@ namespace JasonGraf
 
         public Edge CreateEdge(Port output, Port input)
         {
-            var edge = new Edge();
-            edge.input = input;
-            edge.output = output;
+            var edge = output.ConnectTo(input);
             AddElement(edge);
             return edge;
         }
