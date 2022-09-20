@@ -8,8 +8,8 @@
       "string_2": "test_2",
       "bool_2": false,
       "_pos": [
-        0,
-        0
+        -77,
+        55
       ]
     },
     "int_list": [
@@ -31,21 +31,21 @@
       {
         "string_3": "test_3",
         "_pos": [
-          0,
-          0
+          -69,
+          228
         ]
       },
       {
         "bool_3": true,
         "_pos": [
-          0,
-          0
+          -73,
+          150
         ]
       }
     ],
     "_pos": [
-      0,
-      0
+      -309,
+      82
     ]
   },
   "node_2": {
@@ -53,8 +53,8 @@
     "bool": false,
     "string": "test_string_2",
     "_pos": [
-      361,
-      267
+      90,
+      318
     ]
   },
   "node_3": {
@@ -63,8 +63,8 @@
     "bool": true,
     "string": "test_string_3",
     "_pos": [
-      364,
-      -131
+      93,
+      -79
     ]
   }
 }
